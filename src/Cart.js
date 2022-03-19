@@ -20,10 +20,21 @@ export default class Cart {
     }, 0);
   }
 
-  checkout() {
+  summary() {
     return {
       total: this.getTotal(),
       items: this.items,
+    };
+  }
+
+  checkout() {
+    const { total, items } = this.summary();
+
+    this.items = [];
+
+    return {
+      total,
+      items,
     };
   }
 }
