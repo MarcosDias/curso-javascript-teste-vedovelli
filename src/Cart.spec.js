@@ -61,4 +61,20 @@ describe('Cart', () => {
       expect(cart.getTotal()).toEqual(41872);
     });
   });
+
+  describe('checkout()', () => {
+    it('should return a object with the total and the list of items', () => {
+      cart.add({
+        product,
+        quantity: 2,
+      });
+
+      cart.add({
+        product: product2,
+        quantity: 1,
+      });
+
+      expect(cart.checkout()).toMatchSnapshot();
+    });
+  });
 });
