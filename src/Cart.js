@@ -6,16 +6,16 @@ const Money = Dinero;
 Money.defaultCurrency = 'BRL';
 Money.defaultPrecision = 2;
 
-const calculatePercentageDiscount = (amount, item) => {
-  if (item.condition?.percentage && item.quantity > item.condition.minimum) {
-    return amount.percentage(item.condition.percentage);
+const calculatePercentageDiscount = (amount, { quantity, condition }) => {
+  if (condition?.percentage && quantity > condition.minimum) {
+    return amount.percentage(condition.percentage);
   }
   return Money({ amount: 0 });
 };
 
-const calculateQuantityDiscount = (amount, item) => {
-  const isEven = item.quantity % 2 === 0;
-  if (item.condition?.quantity && item.quantity > item.condition.quantity) {
+const calculateQuantityDiscount = (amount, { quantity, condition }) => {
+  const isEven = quantity % 2 === 0;
+  if (condition?.quantity && quantity > condition.quantity) {
     return amount.percentage(isEven ? 50 : 40);
   }
   return Money({ amount: 0 });
@@ -58,12 +58,12 @@ export default class Cart {
   }
 
   getTotal() {
-    return this.items.reduce((acc, item) => {
-      const amount = Money({ amount: item.quantity * item.product.price });
+    return this.items.reduce((acc, { quantity, product, condition }) => {
+      const amount = Money({ amount: quantity * product.price });
       let discount = Money({ amount: 0 });
 
-      if (item.condition) {
-        discount = calculateDiscount(amount, item.quantity, item.condition);
+      if (condition) {
+        discount = calculateDiscount(amount, quantity, condition);
       }
 
       return acc.add(amount).subtract(discount);
