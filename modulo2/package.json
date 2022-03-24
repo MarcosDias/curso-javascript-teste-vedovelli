@@ -17,9 +17,10 @@
     "tailwindcss": "^1.7.4"
   },
   "devDependencies": {
-    "@testing-library/dom": "^8.11.3",
+    "@testing-library/dom": "^8.11.4",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
+    "@testing-library/user-event": "^13.5.0",
     "babel-jest": "^27.5.1",
     "jest": "^27.5.1",
     "jest-dom": "^4.0.0",
