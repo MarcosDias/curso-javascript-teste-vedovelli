@@ -8,6 +8,10 @@
     "start": "next start",
     "test": "jest",
     "test:watch": "jest --watchAll",
+    "test:unit": "jest --config=jest-unit.config.js",
+    "test:unit:watch": "jest --config=jest-unit.config.js --watchAll",
+    "test:integration": "jest --config=jest-integration.config.js",
+    "test:integration:watch": "jest --config=jest-integration.config.js --watchAll",
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
