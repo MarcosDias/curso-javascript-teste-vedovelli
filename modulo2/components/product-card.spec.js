@@ -10,17 +10,17 @@ const product = {
 
 const addToCart = jest.fn();
 
-const renderProductCart = () => render(<ProductCard product={product} addToCart={addToCart} />);
+const renderProductCard = () => render(<ProductCard product={product} addToCart={addToCart} />);
 
 describe('Product Card', () => {
   it('should render Product Card', () => {
-    renderProductCart();
+    renderProductCard();
 
     expect(screen.getByTestId('product-card')).toBeInTheDocument();
   });
 
   it('should display proper content', () => {
-    renderProductCart();
+    renderProductCard();
 
     expect(screen.getByText(new RegExp(product.title, 'i'))).toBeInTheDocument();
     expect(screen.getByText(new RegExp(product.price, 'i'))).toBeInTheDocument();
@@ -30,7 +30,7 @@ describe('Product Card', () => {
   });
 
   it('should call props.addToCart() when button gets clicked', () => {
-    renderProductCart();
+    renderProductCard();
 
     const btn = screen.getByRole('button');
 
