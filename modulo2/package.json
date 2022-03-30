@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@tailwindcss/ui": "^0.6.2",
+    "axios": "^0.26.1",
     "next": "10.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
@@ -28,8 +29,10 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "babel-jest": "^27.5.1",
+    "faker": "^5.5.3",
     "jest": "^27.5.1",
     "jest-dom": "^4.0.0",
+    "miragejs": "^0.1.43",
     "postcss-flexbugs-fixes": "4.2.1",
     "postcss-preset-env": "^6.7.0"
   }
