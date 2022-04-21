@@ -29,7 +29,6 @@ export default function Search({ doSearch }) {
           />
         </svg>
       </span>
-      With('');
       <input
         value={term}
         onInput={inputHandler}
