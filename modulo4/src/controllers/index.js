@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /**
  * Os Controllers servem diretamente às rotas e usam os
  * Services para armazenar os dados. São responsáveis
