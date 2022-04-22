@@ -9,5 +9,6 @@ module.exports = {
     '<rootDir>/components/**/*.js',
     '<rootDir>/pages/**/*.js',
     '<rootDir>/hook/**/*.js',
+    '<rootDir>/store/**/*.js',
   ],
 };
