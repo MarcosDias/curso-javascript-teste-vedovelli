@@ -1,17 +1,31 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
 import CartItem from './cart-item';
+import userEvent from '@testing-library/user-event';
+import { renderHook } from '@testing-library/react-hooks';
+import { useCartStore } from '../store/cart';
+import { setAutoFreeze } from 'immer';
+
+setAutoFreeze(false);
 
 const product = {
-  title: 'Super Smartwatch',
+  title: 'Relógio bonito',
   price: '22.00',
   image:
-    'https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80',
+    'https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
 };
 
-const renderCartItem = () => render(<CartItem product={product} />);
+const renderCartItem = () => {
+  render(<CartItem product={product} />);
+};
 
-describe('Cart Item', () => {
-  it('should render Cart Item', () => {
+describe('CartItem', () => {
+  let cartStore;
+
+  beforeEach(() => {
+    cartStore = renderHook(() => useCartStore()).result;
+  });
+
+  it('should render CartItem', () => {
     renderCartItem();
 
     expect(screen.getByTestId('cart-item')).toBeInTheDocument();
@@ -20,50 +34,50 @@ describe('Cart Item', () => {
   it('should display proper content', () => {
     renderCartItem();
 
+    const image = screen.getByTestId('image');
+
     expect(screen.getByText(new RegExp(product.title, 'i'))).toBeInTheDocument();
     expect(screen.getByText(new RegExp(product.price, 'i'))).toBeInTheDocument();
-    expect(screen.getByTestId('image')).toHaveProperty('src', product.image);
+    expect(image).toHaveProperty('src', product.image);
+    expect(image).toHaveProperty('alt', product.title);
   });
 
-  it('should display 1 as initial quantity', () => {
+  it('should call remove() when remove button is clicked', async () => {
+    const spy = jest.spyOn(cartStore.current.actions, 'remove');
+
     renderCartItem();
 
-    expect(screen.getByTestId('quantity').textContent).toBe('1');
+    const button = screen.getByRole('button', { name: /remove/i });
+
+    await userEvent.click(button);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(product);
   });
 
-  it('should increase quantity by 1 when second button is clicked', () => {
+  it('should call increase() when increase button is clicked', async () => {
+    const spy = jest.spyOn(cartStore.current.actions, 'increase');
+
     renderCartItem();
 
-    const [_, btn] = screen.getAllByRole('button');
+    const button = screen.getByTestId('increase');
 
-    fireEvent.click(btn);
+    await userEvent.click(button);
 
-    expect(screen.getByTestId('quantity').textContent).toBe('2');
-  });
-  it('should decrease quantity by 1 when first button is clicked', () => {
-    renderCartItem();
-
-    const [btnDecrease, btnIncrease] = screen.getAllByRole('button');
-    const quantity = screen.getByTestId('quantity');
-
-    fireEvent.click(btnIncrease);
-    expect(quantity.textContent).toBe('2');
-
-    fireEvent.click(btnDecrease);
-    expect(quantity.textContent).toBe('1');
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(product);
   });
 
-  it('should not go below zero in the quantity', () => {
+  it('should call increase() when increase button is clicked', async () => {
+    const spy = jest.spyOn(cartStore.current.actions, 'decrease');
+
     renderCartItem();
 
-    const [btnDecrease] = screen.getAllByRole('button');
-    const quantity = screen.getByTestId('quantity');
+    const button = screen.getByTestId('decrease');
 
-    expect(quantity.textContent).toBe('1');
+    await userEvent.click(button);
 
-    fireEvent.click(btnDecrease);
-    fireEvent.click(btnDecrease);
-
-    expect(quantity.textContent).toBe('0');
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(product);
   });
 });
