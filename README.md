@@ -62,12 +62,11 @@ Link: https://javascript.tv.br/
 **Módulo 4: Testar Aplicações Server Side**
 
 - Projeto 4 - Node.js/Express/SQLite
-
   - Fazer o clone do repositório e instalar as dependências
   - Visão geral do projeto e suas dependências
   - Neste projeto nos aprofundaremos em mocking
 
-  **Módulo 5: Garantir que os testes protejam sua aplicação**
+**Módulo 5: Garantir que os testes protejam sua aplicação**
 
 - Projeto 5 - Github Actions/CircleCI
   - Utilizar Github Actions para evitar que Pull Requests possam ser incorporados sem que todos os testes passem
